@@ -35,54 +35,63 @@ else
 	sudo rm -rf "$PYTHON_VERSION"
 fi
 
-#Start Home Assistant install
+HA_SERVICE_STATUS=$(sudo systemctl status home-assistant@pi > /dev/null 2>&1; echo $?)
 
-#Add necessary packages
-echo "Verifying required packages are present."
-sudo apt-get install python3 python3-dev python3-venv python3-pip libffi-dev libssl-dev libjpeg-dev zlib1g-dev autoconf build-essential libopenjp2-7 libtiff5 -y
+if [[ $HA_SERVICE_STATUS -gt 0 ]]
+then
 
-#Create User and add to relevant groups
-echo "Creating HA user and adding him to necessary groups."
-sudo useradd -rm homeassistant -G dialout,gpio,i2c
+	#Start Home Assistant install
 
-#Create srv direcotry and change its ownership
-cd /srv
-sudo mkdir homeassistant
-sudo chown homeassistant:homeassistant homeassistant
-echo "HA directory created and permissions updated."
-# run default shell for user (homeassistant) in user's home directory
-sudo -u homeassistant -H -s
-#sudo su -s /bin/bash homeassistant
-#Browse to HA directory and activate python3.8
-cd /srv/homeassistant
-python3.8 -m venv .
-source /srv/homeassistant/bin/activate
-exit
-source /srv/homeassistant/bin/activate
-#Add to bash
-#sudo $(echo "source /srv/homeassistant/bin/activate" >> /home/homeassistant/.bashrc)
+	#Add necessary packages
+	echo "Verifying required packages are present."
+	sudo apt-get install python3 python3-dev python3-venv python3-pip libffi-dev libssl-dev libjpeg-dev zlib1g-dev autoconf build-essential libopenjp2-7 libtiff5 -y
 
-#sudo -u homeassistant -H -s
-sudo su -s /bin/bash homeassistant
-source /srv/homeassistant/bin/activate
-# Install wheel
-python3 -m pip install wheel
+	#Create User and add to relevant groups
+	echo "Creating HA user and adding him to necessary groups."
+	sudo useradd -rm homeassistant -G dialout,gpio,i2c
 
-# Install Home Assistant
-pip3 install homeassistant
+	#Create srv direcotry and change its ownership
+	cd /srv
+	sudo mkdir homeassistant
+	sudo chown homeassistant:homeassistant homeassistant
+	echo "HA directory created and permissions updated."
+	# run default shell for user (homeassistant) in user's home directory
+	sudo -u homeassistant -H -s
+	#sudo su -s /bin/bash homeassistant
+	#Browse to HA directory and activate python3.8
+	cd /srv/homeassistant
+	python3.8 -m venv .
+	source /srv/homeassistant/bin/activate
+	exit
+	source /srv/homeassistant/bin/activate
+	#Add to bash
+	#sudo $(echo "source /srv/homeassistant/bin/activate" >> /home/homeassistant/.bashrc)
 
-#Start Home Assistant service
-#hass
+	#sudo -u homeassistant -H -s
+	sudo su -s /bin/bash homeassistant
+	source /srv/homeassistant/bin/activate
+	# Install wheel
+	python3 -m pip install wheel
 
-exit
+	# Install Home Assistant
+	pip3 install homeassistant
 
-wget "https://raw.githubusercontent.com/piyushkumarjiit/HomeAssistant/main/home-assistant%40pi.service"
-mv home-assistant@pi.service /etc/systemd/system/home-assistant@pi.service
+	#Start Home Assistant service
+	#hass
 
-sudo systemctl --system daemon-reload
-sudo systemctl enable home-assistant@pi
-sudo systemctl start home-assistant@pi
+	exit
 
-#sudo systemctl status home-assistant@pi -l
-#sudo journalctl -f -u home-assistant@pi
+	wget "https://raw.githubusercontent.com/piyushkumarjiit/HomeAssistant/main/home-assistant%40pi.service"
+	mv home-assistant@pi.service /etc/systemd/system/home-assistant@pi.service
 
+	sudo systemctl --system daemon-reload
+	sudo systemctl enable home-assistant@pi
+	sudo systemctl start home-assistant@pi
+
+else
+
+	echo "HA Service running. Skipping installation."
+	sudo systemctl status home-assistant@pi -l
+	sudo journalctl -f -u home-assistant@pi
+
+fi
