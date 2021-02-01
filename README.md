@@ -13,12 +13,12 @@ The script is self contained and fetches necessary files from github repo.
 #### Simple Installation
 For installation, run below commands from your Pi terminal (or SSH session) :
 
-<code>wget https://raw.githubusercontent.com/piyushkumarjiit/PiHoleWithDoH/master/DNS_Over_HTTPS_Via_Cloudflare.sh</code>
+<code>wget https://raw.githubusercontent.com/piyushkumarjiit/HomeAssistant/main/install_hass.sh</code>
 
 Update the permissions on the downloaded file using:
 
-<code>chmod 755 DNS_Over_HTTPS_Via_Cloudflare.sh</code>
+<code>chmod 755 install_hass.sh</code>
 
 Now run below script and follow prompts:
 
-<code>./DNS_Over_HTTPS_Via_Cloudflare.sh  | tee DNS_Over_HTTPS_Via_Cloudflare.log</code>
+<code>./install_hass.sh  | tee install_hass.log</code>
