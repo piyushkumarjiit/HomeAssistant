@@ -26,6 +26,7 @@ else
 	sudo ./configure --enable-optimizations
 	sudo make -j 4
 	sudo make altinstall
+	update-alternatives --install /usr/bin/python python /usr/bin/$PYTHON_COMMAND_VERSION 1
 	echo "Updated Python version: $($PYTHON_COMMAND_VERSION -V)"
 	echo "alias python=/usr/local/bin/$PYTHON_COMMAND_VERSION" >> ~/.bashrc
 	source ~/.bashrc
@@ -58,6 +59,7 @@ then
 	# run default shell for user (homeassistant) in user's home directory
 	sudo -u homeassistant -H -s
 	#sudo su -s /bin/bash homeassistant
+	echo "alias python=/usr/local/bin/$PYTHON_COMMAND_VERSION" >> ~/.bashrc
 	#Browse to HA directory and activate python3.8
 	cd /srv/homeassistant
 	python3.8 -m venv .
