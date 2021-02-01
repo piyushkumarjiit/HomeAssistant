@@ -13,7 +13,7 @@ sudo apt-get update && sudo apt-get upgrade -y && sudo apt-get dist-upgrade -y &
 
 CURRENT_PYTHON_VERSION=`python -c 'import sys; version=sys.version_info[:3]; print("{0}.{1}.{2}".format(*version))'`
 python_version=$(python -V | grep python3.8 > /dev/null 2>&1; echo $?)
-if [[ $CURRENT_PYTHON_VERSION >= $PYTHON_VERSION ]]
+if [[ "$CURRENT_PYTHON_VERSION" == "$PYTHON_VERSION" ]]
 then
 	echo "Python-$PYTHON_VERSION is not present. Installing."
 	#Install Python 3.8
