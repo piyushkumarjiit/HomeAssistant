@@ -2,7 +2,7 @@
 #Author: piyushkumar.jiit@gmail.com
 
 #Abort installation if any of the commands fail
-set -e
+#set -e
 
 PYTHON_VERSION="Python-3.8.0"
 PYTHON_COMMAND_VERSION="python3.8"
@@ -29,7 +29,8 @@ else
 	echo "Updated Python version: $($PYTHON_COMMAND_VERSION -V)"
 	echo "alias python=/usr/local/bin/$PYTHON_COMMAND_VERSION" >> ~/.bashrc
 	source ~/.bashrc
-	echo "Defult python version after update: $(python -V)"
+	CURRENT_PYTHON_VERSION=`python -c 'import sys; version=sys.version_info[:3]; print("{0}.{1}.{2}".format(*version))'`
+	echo "Defult python version after update: $CURRENT_PYTHON_VERSION"
 	sudo rm -rf "$PYTHON_VERSION.tgz"
 	sudo rm -rf "$PYTHON_VERSION"
 fi
@@ -54,6 +55,9 @@ sudo -u homeassistant -H -s
 cd /srv/homeassistant
 python3.8 -m venv .
 source bin/activate
+
+#Add to bash
+#echo "source /srv/homeassistant/bin/activate" >> /home/homeassistant/.bashrc
 
 # Install wheel
 python3 -m pip install wheel
