@@ -3,7 +3,7 @@
 
 #Abort installation if any of the commands fail
 #set -e
-INSTALL_PYTHON="true"
+INSTALL_PYTHON="false"
 PYTHON_VERSION="Python-3.8.0"
 PYTHON_COMMAND_VERSION="python3.8"
 
@@ -71,12 +71,12 @@ then
 	#echo "source /srv/homeassistant/bin/activate" | sudo tee -a /home/homeassistant/.bashrc
 	#echo "source /srv/homeassistant/bin/activate" | sudo tee -a /home/pi/.bashrc
 
-	echo "Back in $(pwd)"
+	echo "Back in $(pwd) as $(whoami)"
 
 	cd ~
 
-	#wget 'https://raw.githubusercontent.com/piyushkumarjiit/HomeAssistant/main/home-assistant-pi.service'
-	#sudo cp 'home-assistant-pi.service' '/etc/systemd/system/home-assistant-pi.service'
+	wget 'https://raw.githubusercontent.com/piyushkumarjiit/HomeAssistant/main/home-assistant-pi.service'
+	sudo cp 'home-assistant-pi.service' '/etc/systemd/system/home-assistant-pi.service'
 
 	#sudo systemctl --system daemon-reload
 	#sudo systemctl enable home-assistant-pi
