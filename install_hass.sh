@@ -21,7 +21,9 @@ then
 else
 	echo "Installed Python version: $CURRENT_PYTHON_VERSION. $PYTHON_VERSION is not present. Installing."
 	#Install Python 3.8
-	wget ""
+	wget "https://raw.githubusercontent.com/piyushkumarjiit/HomeAssistant/main/install_python3.8.sh"
+	chmod 755 install_python3.8.sh
+	./install_python3.8.sh
 	echo "Python installed."
 fi
 

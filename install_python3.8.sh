@@ -43,3 +43,5 @@ CURRENT_PYTHON_VERSION=`python -c 'import sys; version=sys.version_info[:3]; pri
 echo "Defult python version after update: $CURRENT_PYTHON_VERSION"
 sudo rm -rf "$PYTHON_VERSION.tgz"
 sudo rm -rf "$PYTHON_VERSION"
+
+echo "Python installation script complete."
