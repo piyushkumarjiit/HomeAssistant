@@ -7,7 +7,7 @@ INSTALL_PYTHON="true"
 PYTHON_VERSION="Python-3.8.0"
 PYTHON_COMMAND_VERSION="python3.8"
 
-#source ~/.bashrc
+source ~/.bashrc
 #source /home/homeassistant/.bashrc
 
 #Update everything
