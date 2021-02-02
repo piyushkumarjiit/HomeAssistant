@@ -63,7 +63,7 @@ then
 	sudo -H -u homeassistant -s /bin/bash -c 'echo "Wheel installed."'
 	sudo -H -u homeassistant -s /bin/bash -c '/srv/homeassistant/bin/pip3 install homeassistant'
 	sudo -H -u homeassistant -s /bin/bash -c 'echo " Home Assistant installed"'
-	sudo -H -u homeassistant -s /bin/bash -c '/srv/homeassistant/hass'
+	sudo -H -u homeassistant -s /bin/bash -c '/srv/homeassistant/bin/hass'
 	#exit
 	#EOF
 	
@@ -72,6 +72,8 @@ then
 	#echo "source /srv/homeassistant/bin/activate" | sudo tee -a /home/pi/.bashrc
 
 	echo "Back in $(pwd)"
+
+	cd ~
 
 	#wget 'https://raw.githubusercontent.com/piyushkumarjiit/HomeAssistant/main/home-assistant-pi.service'
 	#sudo cp 'home-assistant-pi.service' '/etc/systemd/system/home-assistant-pi.service'
