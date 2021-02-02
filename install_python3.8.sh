@@ -8,7 +8,7 @@ PYTHON_VERSION="Python-3.8.0"
 PYTHON_COMMAND_VERSION="python3.8"
 PYTHON_DOWNLOAD_URL="https://www.python.org/ftp/python/3.8.0/Python-3.8.0.tgz"
 
-CURRENT_PYTHON_VERSION=`python -c 'import sys; version=sys.version_info[:3]; print("{0}.{1}.{2}".format(*version))'`
+CURRENT_PYTHON_VERSION=`python3 -c 'import sys; version=sys.version_info[:3]; print("{0}.{1}.{2}".format(*version))'`
 echo "Python version returned: $CURRENT_PYTHON_VERSION while requested Python version is : $PYTHON_VERSION"
 
 #Update everything
@@ -39,6 +39,9 @@ echo "Updated Python version: $($PYTHON_COMMAND_VERSION -V)"
 #echo "alias python3=/usr/local/bin/$PYTHON_COMMAND_VERSION" | sudo tee -a /home/pi/.bashrc
 #echo "alias python3=/usr/local/bin/$PYTHON_COMMAND_VERSION" | sudo tee -a /home/homeassistant/.bashrc
 source ~/.bashrc
+
+#sudo ln -s -f /usr/local/bin/python3.8 /usr/local/bin/python3
+
 #source /home/homeassistant/.bashrc
 CURRENT_PYTHON_VERSION=`python -c 'import sys; version=sys.version_info[:3]; print("{0}.{1}.{2}".format(*version))'`
 echo "Defult python version after update: $CURRENT_PYTHON_VERSION"

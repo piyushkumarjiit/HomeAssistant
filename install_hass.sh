@@ -13,7 +13,7 @@ PYTHON_COMMAND_VERSION="python3.8"
 #Update everything
 sudo apt-get update && sudo apt-get upgrade -y && sudo apt-get dist-upgrade -y && sudo apt-get autoclean -y && sudo apt-get autoremove -y
 
-CURRENT_PYTHON_VERSION=`python -c 'import sys; version=sys.version_info[:3]; print("{0}.{1}.{2}".format(*version))'`
+CURRENT_PYTHON_VERSION=`python3 -c 'import sys; version=sys.version_info[:3]; print("{0}.{1}.{2}".format(*version))'`
 echo "Python version returned: $CURRENT_PYTHON_VERSION while requested Python version is : $PYTHON_VERSION"
 if [[ "Python-$CURRENT_PYTHON_VERSION" == "$PYTHON_VERSION" || "$INSTALL_PYTHON" == "false" ]]
 then
