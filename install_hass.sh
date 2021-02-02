@@ -45,7 +45,7 @@ then
 	#Create srv direcotry and change its ownership
 	cd /srv
 	sudo mkdir -p homeassistant
-	sudo chown homeassistant:homeassistant homeassistant
+	
 	echo "HA directory created and permissions updated."
 	#Browse to HA directory and activate python3.8
 	cd /srv/homeassistant
@@ -62,6 +62,8 @@ then
 	# Install Home Assistant
 	pip3 install homeassistant
 
+	sudo chown homeassistant:homeassistant homeassistant
+
 	#Start Home Assistant service
 	#hass
 	#exit
@@ -72,18 +74,18 @@ then
 
 	echo "Back in $(pwd)"
 
-	wget 'https://raw.githubusercontent.com/piyushkumarjiit/HomeAssistant/main/home-assistant.pi.service'
-	sudo cp 'home-assistant.pi.service' '/etc/systemd/system/home-assistant.pi.service'
+	#wget 'https://raw.githubusercontent.com/piyushkumarjiit/HomeAssistant/main/home-assistant-pi.service'
+	#sudo cp 'home-assistant-pi.service' '/etc/systemd/system/home-assistant-pi.service'
 
-	sudo systemctl --system daemon-reload
-	sudo systemctl enable home-assistant.pi
-	sudo systemctl start home-assistant.pi
-	echo "Service restarted."
+	#sudo systemctl --system daemon-reload
+	#sudo systemctl enable home-assistant-pi
+	#sudo systemctl start home-assistant-pi
+	#echo "Service restarted."
 
 else
 
 	echo "HA Service running. Skipping installation."
-	sudo systemctl status home-assistant@pi -l
-	sudo journalctl -f -u home-assistant@pi
+	sudo systemctl status home-assistant-pi -l
+	sudo journalctl -f -u home-assistant-pi
 
 fi
