@@ -23,13 +23,14 @@ sudo tar zxf "$PYTHON_VERSION.tgz"
 cd "$PYTHON_VERSION"
 sudo ./configure --enable-optimizations
 sudo make -j 4
-sudo make altinstall
-sudo update-alternatives --install /usr/bin/python python /usr/local/bin/$PYTHON_COMMAND_VERSION 1
-sudo update-alternatives --install /usr/bin/python3 python3 /usr/local/bin/$PYTHON_COMMAND_VERSION 1
+#sudo make altinstall
+sudo make install
+#sudo update-alternatives --install /usr/bin/python python /usr/local/bin/$PYTHON_COMMAND_VERSION 1
+#sudo update-alternatives --install /usr/bin/python3 python3 /usr/local/bin/$PYTHON_COMMAND_VERSION 1
 #update-alternatives --install /usr/bin/python python /usr/local/bin/$PYTHON_COMMAND_VERSION 1
 #update-alternatives --install /usr/bin/python3 python3 /usr/local/bin/$PYTHON_COMMAND_VERSION 1
-sudo update-alternatives --config python
-sudo update-alternatives --config python3
+#sudo update-alternatives --config python
+#sudo update-alternatives --config python3
 
 echo "Updated Python version: $($PYTHON_COMMAND_VERSION -V)"
 #echo "alias python=/usr/local/bin/$PYTHON_COMMAND_VERSION" >> ~/.bashrc
