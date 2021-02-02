@@ -25,20 +25,20 @@ sudo ./configure --enable-optimizations
 sudo make -j 4
 sudo make altinstall
 sudo update-alternatives --install /usr/bin/python python /usr/local/bin/$PYTHON_COMMAND_VERSION 1
-#sudo update-alternatives --install /usr/bin/python3 python3 /usr/local/bin/$PYTHON_COMMAND_VERSION 1
-#update-alternatives --install /usr/bin/python python /usr/local/bin/python3.8 1
-#update-alternatives --install /usr/bin/python3 python3 /usr/local/bin/python3.8 1
+sudo update-alternatives --install /usr/bin/python3 python3 /usr/local/bin/$PYTHON_COMMAND_VERSION 1
+update-alternatives --install /usr/bin/python python /usr/local/bin/python3.8 1
+update-alternatives --install /usr/bin/python3 python3 /usr/local/bin/python3.8 1
 sudo update-alternatives --config python
-#sudo update-alternatives --config python3
+sudo update-alternatives --config python3
 
 echo "Updated Python version: $($PYTHON_COMMAND_VERSION -V)"
 #echo "alias python=/usr/local/bin/$PYTHON_COMMAND_VERSION" >> ~/.bashrc
-echo "alias python=/usr/local/bin/$PYTHON_COMMAND_VERSION" | sudo tee -a /home/pi/.bashrc
-echo "alias python=/usr/local/bin/$PYTHON_COMMAND_VERSION" | sudo tee -a /home/homeassistant/.bashrc
-echo "alias python3=/usr/local/bin/$PYTHON_COMMAND_VERSION" | sudo tee -a /home/pi/.bashrc
-echo "alias python3=/usr/local/bin/$PYTHON_COMMAND_VERSION" | sudo tee -a /home/homeassistant/.bashrc
-source ~/.bashrc
-source /home/homeassistant/.bashrc
+#echo "alias python=/usr/local/bin/$PYTHON_COMMAND_VERSION" | sudo tee -a /home/pi/.bashrc
+#echo "alias python=/usr/local/bin/$PYTHON_COMMAND_VERSION" | sudo tee -a /home/homeassistant/.bashrc
+#echo "alias python3=/usr/local/bin/$PYTHON_COMMAND_VERSION" | sudo tee -a /home/pi/.bashrc
+#echo "alias python3=/usr/local/bin/$PYTHON_COMMAND_VERSION" | sudo tee -a /home/homeassistant/.bashrc
+#source ~/.bashrc
+#source /home/homeassistant/.bashrc
 CURRENT_PYTHON_VERSION=`python -c 'import sys; version=sys.version_info[:3]; print("{0}.{1}.{2}".format(*version))'`
 echo "Defult python version after update: $CURRENT_PYTHON_VERSION"
 sudo rm -rf "$PYTHON_VERSION.tgz"
