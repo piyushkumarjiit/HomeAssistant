@@ -82,7 +82,7 @@ then
 	sudo systemctl --system daemon-reload
 	sudo systemctl enable home-assistant-pi
 	sudo systemctl start home-assistant-pi
-	#echo "Service restarted."
+	echo "Service started."
 
 else
 
@@ -91,3 +91,5 @@ else
 	sudo journalctl -f -u home-assistant-pi
 
 fi
+
+echo "Script complete."
