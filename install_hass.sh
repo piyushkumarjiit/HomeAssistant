@@ -63,7 +63,7 @@ then
 	python3.8 -m pip install wheel
 	echo "Wheel installed."
 	# Install Home Assistant --> Next issue causing line
-	pip3 install homeassistant
+	pip3.8 install homeassistant
 	echo " Home Assistant installed"
 
 	sudo chown -R homeassistant:homeassistant homeassistant
