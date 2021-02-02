@@ -56,10 +56,10 @@ then
 	#sudo -H -u homeassistant -s /bin/bash -c 'python3.8 -m venv --without-pip .'
 	#sudo -H -u homeassistant -s /bin/bash -c 'python3.8 -m ensurepip --upgrade'
 	#sudo -H -u homeassistant -s /bin/bash -c 'pip3 install --upgrade pip'
-	sudo -H -u homeassistant -s /bin/bash -c 'echo "Python 3.8 virtual env setup."'
+	sudo -H -u homeassistant -s /bin/bash -c 'echo "Python 3 virtual env setup."'
 	sudo -H -u homeassistant -s /bin/bash -c 'source /srv/homeassistant/bin/activate'
 	sudo -H -u homeassistant -s /bin/bash -c 'echo "Virtual environment activated."'
-	sudo -H -u homeassistant -s /bin/bash -c '/srv/homeassistant/bin/python3.8 -m pip install wheel'
+	sudo -H -u homeassistant -s /bin/bash -c '/srv/homeassistant/bin/python3 -m pip install wheel'
 	sudo -H -u homeassistant -s /bin/bash -c 'echo "Wheel installed."'
 	sudo -H -u homeassistant -s /bin/bash -c '/srv/homeassistant/bin/pip3 install homeassistant'
 	sudo -H -u homeassistant -s /bin/bash -c 'echo "Home Assistant installed"'
@@ -79,9 +79,9 @@ then
 	echo "Service file downlaoded."
 	sudo cp 'home-assistant-pi.service' '/etc/systemd/system/home-assistant-pi.service'
 
-	#sudo systemctl --system daemon-reload
-	#sudo systemctl enable home-assistant-pi
-	#sudo systemctl start home-assistant-pi
+	sudo systemctl --system daemon-reload
+	sudo systemctl enable home-assistant-pi
+	sudo systemctl start home-assistant-pi
 	#echo "Service restarted."
 
 else
