@@ -37,13 +37,14 @@ echo "Updated Python version: $($PYTHON_COMMAND_VERSION -V)"
 #echo "alias python=/usr/local/bin/$PYTHON_COMMAND_VERSION" | sudo tee -a /home/homeassistant/.bashrc
 #echo "alias python3=/usr/local/bin/$PYTHON_COMMAND_VERSION" | sudo tee -a /home/pi/.bashrc
 #echo "alias python3=/usr/local/bin/$PYTHON_COMMAND_VERSION" | sudo tee -a /home/homeassistant/.bashrc
-#source ~/.bashrc
+source ~/.bashrc
 #source /home/homeassistant/.bashrc
 CURRENT_PYTHON_VERSION=`python -c 'import sys; version=sys.version_info[:3]; print("{0}.{1}.{2}".format(*version))'`
 echo "Defult python version after update: $CURRENT_PYTHON_VERSION"
 CURRENT_PYTHON_VERSION=`python3 -c 'import sys; version=sys.version_info[:3]; print("{0}.{1}.{2}".format(*version))'`
 echo "Defult python3 version after update: $CURRENT_PYTHON_VERSION"
-sudo rm -rf "$PYTHON_VERSION.tgz"
-sudo rm -rf "$PYTHON_VERSION"
+cd ~
+sudo rm -f "$PYTHON_VERSION.tgz"
+sudo rm -Rf "$PYTHON_VERSION"
 
 echo "Python installation script complete."
