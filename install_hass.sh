@@ -3,7 +3,7 @@
 
 #Abort installation if any of the commands fail
 #set -e
-
+INSTALL_PYTHON="false"
 PYTHON_VERSION="Python-3.8.0"
 PYTHON_COMMAND_VERSION="python3.8"
 PYTHON_DOWNLOAD_URL="https://www.python.org/ftp/python/3.8.0/Python-3.8.0.tgz"
@@ -16,7 +16,7 @@ sudo apt-get update && sudo apt-get upgrade -y && sudo apt-get dist-upgrade -y &
 
 CURRENT_PYTHON_VERSION=`python -c 'import sys; version=sys.version_info[:3]; print("{0}.{1}.{2}".format(*version))'`
 echo "Python version returned: $CURRENT_PYTHON_VERSION while requested Python version is : $PYTHON_VERSION"
-if [[ "Python-$CURRENT_PYTHON_VERSION" == "$PYTHON_VERSION" ]]
+if [[ "Python-$CURRENT_PYTHON_VERSION" == "$PYTHON_VERSION" || "$INSTALL_PYTHON" == "false" ]]
 then
 	echo "$PYTHON_VERSION already available. Proceeding with HA install."
 else
@@ -29,9 +29,13 @@ else
 	sudo ./configure --enable-optimizations
 	sudo make -j 4
 	sudo make altinstall
-	update-alternatives --install /usr/bin/python python /usr/local/bin/$PYTHON_COMMAND_VERSION 1
+	sudo update-alternatives --install /usr/bin/python python /usr/local/bin/$PYTHON_COMMAND_VERSION 1
+	sudo update-alternatives --install /usr/bin/python3 python3 /usr/local/bin/$PYTHON_COMMAND_VERSION 1
 	#update-alternatives --install /usr/bin/python python /usr/local/bin/python3.8 1
+	#update-alternatives --install /usr/bin/python3 python3 /usr/local/bin/python3.8 1
 	sudo update-alternatives --config python
+	sudo update-alternatives --config python3
+
 	echo "Updated Python version: $($PYTHON_COMMAND_VERSION -V)"
 	#echo "alias python=/usr/local/bin/$PYTHON_COMMAND_VERSION" >> ~/.bashrc
 	echo "alias python=/usr/local/bin/$PYTHON_COMMAND_VERSION" | sudo tee -a /home/pi/.bashrc
