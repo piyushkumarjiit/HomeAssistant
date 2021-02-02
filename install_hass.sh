@@ -67,12 +67,13 @@ then
 	python3.8 -m venv .
 	source /srv/homeassistant/bin/activate
 	exit
-	source /srv/homeassistant/bin/activate
+	#source /srv/homeassistant/bin/activate
 	#Add to bash
-	#sudo $(echo "source /srv/homeassistant/bin/activate" >> /home/homeassistant/.bashrc)
-
-	#sudo -u homeassistant -H -s
-	sudo su -s /bin/bash homeassistant
+	echo "source /srv/homeassistant/bin/activate" | sudo tee -a /home/homeassistant/.bashrc
+	echo "source /srv/homeassistant/bin/activate" | sudo tee -a /home/pi/.bashrc
+	
+	sudo -u homeassistant -H -s
+	#sudo su -s /bin/bash homeassistant
 	source /srv/homeassistant/bin/activate
 	# Install wheel
 	python3 -m pip install wheel
@@ -85,12 +86,15 @@ then
 
 	exit
 
+	echo "Back in $(pwd)"
+
 	wget "https://raw.githubusercontent.com/piyushkumarjiit/HomeAssistant/main/home-assistant%40pi.service"
-	mv home-assistant@pi.service /etc/systemd/system/home-assistant@pi.service
+	sudo mv home-assistant@pi.service /etc/systemd/system/home-assistant@pi.service
 
 	sudo systemctl --system daemon-reload
 	sudo systemctl enable home-assistant@pi
 	sudo systemctl start home-assistant@pi
+	echo "Service restarted."
 
 else
 
