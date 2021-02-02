@@ -50,19 +50,19 @@ then
 	#Browse to HA directory and activate python3.8
 	cd /srv/homeassistant
 	# run default shell for user (homeassistant) in user's home directory
-	sudo -u homeassistant -H -s
-	sudo -H -u homeassistant -s /bin/bash <<- EOF
-	python3.8 -m venv .
-	echo "Python 3.8 virtual env setup."
-	source /srv/homeassistant/bin/activate
-	echo "Virtual environment activated."
-	python3.8 -m pip install wheel
-	echo "Wheel installed."
-	pip3.8 install homeassistant
-	echo " Home Assistant installed"
-	hass
-	exit
-	EOF
+	#sudo -u homeassistant -H -s
+	#sudo -H -u homeassistant -s /bin/bash <<- EOF
+	sudo -H -u homeassistant -s /bin/bash -c '/srv/homeassistant/bin/python3.8 -m venv .'
+	sudo -H -u homeassistant -s /bin/bash -c 'echo "Python 3.8 virtual env setup."'
+	sudo -H -u homeassistant -s /bin/bash -c 'source /srv/homeassistant/bin/activate'
+	sudo -H -u homeassistant -s /bin/bash -c 'echo "Virtual environment activated."'
+	sudo -H -u homeassistant -s /bin/bash -c '/srv/homeassistant/bin/python3.8 -m pip install wheel'
+	sudo -H -u homeassistant -s /bin/bash -c 'echo "Wheel installed."'
+	sudo -H -u homeassistant -s /bin/bash -c '/srv/homeassistant/bin/pip3.8 install homeassistant'
+	sudo -H -u homeassistant -s /bin/bash -c 'echo " Home Assistant installed"'
+	sudo -H -u homeassistant -s /bin/bash -c '/srv/homeassistant/hass'
+	#exit
+	#EOF
 	
 	#Add to bash
 	#echo "source /srv/homeassistant/bin/activate" | sudo tee -a /home/homeassistant/.bashrc
