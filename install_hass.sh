@@ -74,7 +74,7 @@ then
 	cd /srv/homeassistant
 	# run default shell for user (homeassistant) in user's home directory
 	#sudo -u homeassistant -H -s
-	sudo su -H -u homeassistant -s /bin/bash <<- EOF
+	sudo -H -u homeassistant -s /bin/bash <<- EOF
 	#echo "alias python=/usr/local/bin/$PYTHON_COMMAND_VERSION" >> ~/.bashrc
 	#echo "alias python=/usr/local/bin/python3.8" >> ~/.bashrc
 	python3.8 -m venv .
@@ -93,8 +93,8 @@ then
 
 	echo "Back in $(pwd)"
 
-	wget "https://raw.githubusercontent.com/piyushkumarjiit/HomeAssistant/main/home-assistant%40pi.service"
-	sudo mv home-assistant@pi.service /etc/systemd/system/home-assistant@pi.service
+	wget 'https://raw.githubusercontent.com/piyushkumarjiit/HomeAssistant/main/home-assistant%40pi.service'
+	sudo cp 'home-assistant@pi.service' '/etc/systemd/system/home-assistant@pi.service'
 
 	sudo systemctl --system daemon-reload
 	sudo systemctl enable home-assistant@pi
