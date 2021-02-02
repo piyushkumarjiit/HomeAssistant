@@ -45,36 +45,28 @@ then
 	#Create srv direcotry and change its ownership
 	cd /srv
 	sudo mkdir -p homeassistant
-	
+	sudo chown -R homeassistant:homeassistant homeassistant
 	echo "HA directory created and permissions updated."
 	#Browse to HA directory and activate python3.8
 	cd /srv/homeassistant
 	# run default shell for user (homeassistant) in user's home directory
-	#sudo -u homeassistant -H -s
-	#sudo -H -u homeassistant -s /bin/bash <<- EOF
-	#echo "alias python=/usr/local/bin/$PYTHON_COMMAND_VERSION" >> ~/.bashrc
-	#echo "alias python=/usr/local/bin/python3.8" >> ~/.bashrc
+	sudo -u homeassistant -H -s
+	sudo -H -u homeassistant -s /bin/bash <<- EOF
 	python3.8 -m venv .
 	echo "Python 3.8 virtual env setup."
 	source /srv/homeassistant/bin/activate
 	echo "Virtual environment activated."
-
-	# Install wheel
 	python3.8 -m pip install wheel
 	echo "Wheel installed."
-	# Install Home Assistant --> Next issue causing line
 	pip3.8 install homeassistant
 	echo " Home Assistant installed"
-
-	sudo chown -R homeassistant:homeassistant homeassistant
-
-	#Start Home Assistant service
-	#hass
-	#exit
-	#EOF
+	hass
+	exit
+	EOF
+	
 	#Add to bash
-	echo "source /srv/homeassistant/bin/activate" | sudo tee -a /home/homeassistant/.bashrc
-	echo "source /srv/homeassistant/bin/activate" | sudo tee -a /home/pi/.bashrc
+	#echo "source /srv/homeassistant/bin/activate" | sudo tee -a /home/homeassistant/.bashrc
+	#echo "source /srv/homeassistant/bin/activate" | sudo tee -a /home/pi/.bashrc
 
 	echo "Back in $(pwd)"
 
