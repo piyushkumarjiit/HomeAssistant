@@ -30,8 +30,13 @@ else
 	#update-alternatives --install /usr/bin/python python /usr/local/bin/python3.8 1
 	sudo update-alternatives --config python
 	echo "Updated Python version: $($PYTHON_COMMAND_VERSION -V)"
-	echo "alias python=/usr/local/bin/$PYTHON_COMMAND_VERSION" >> ~/.bashrc
+	#echo "alias python=/usr/local/bin/$PYTHON_COMMAND_VERSION" >> ~/.bashrc
+	echo "alias python=/usr/local/bin/$PYTHON_COMMAND_VERSION" | sudo tee -a /home/pi/.bashrc
+	echo "alias python=/usr/local/bin/$PYTHON_COMMAND_VERSION" | sudo tee -a /home/homeassistant/.bashrc
+	echo "alias python3=/usr/local/bin/$PYTHON_COMMAND_VERSION" | sudo tee -a /home/pi/.bashrc
+	echo "alias python3=/usr/local/bin/$PYTHON_COMMAND_VERSION" | sudo tee -a /home/homeassistant/.bashrc
 	source ~/.bashrc
+	source /home/homeassistant/.bashrc
 	CURRENT_PYTHON_VERSION=`python -c 'import sys; version=sys.version_info[:3]; print("{0}.{1}.{2}".format(*version))'`
 	echo "Defult python version after update: $CURRENT_PYTHON_VERSION"
 	sudo rm -rf "$PYTHON_VERSION.tgz"
@@ -58,33 +63,26 @@ then
 	sudo mkdir homeassistant
 	sudo chown homeassistant:homeassistant homeassistant
 	echo "HA directory created and permissions updated."
-	# run default shell for user (homeassistant) in user's home directory
-	sudo -u homeassistant -H -s
-	#sudo su -s /bin/bash homeassistant
-	echo "alias python=/usr/local/bin/$PYTHON_COMMAND_VERSION" >> ~/.bashrc
 	#Browse to HA directory and activate python3.8
 	cd /srv/homeassistant
+	# run default shell for user (homeassistant) in user's home directory
+	#sudo -u homeassistant -H -s
+	sudo su -H -u homeassistant -s /bin/bash <<- EOF
+	#echo "alias python=/usr/local/bin/$PYTHON_COMMAND_VERSION" >> ~/.bashrc
+	#echo "alias python=/usr/local/bin/python3.8" >> ~/.bashrc
 	python3.8 -m venv .
-	source /srv/homeassistant/bin/activate
-	exit
-	#source /srv/homeassistant/bin/activate
-	#Add to bash
-	echo "source /srv/homeassistant/bin/activate" | sudo tee -a /home/homeassistant/.bashrc
-	echo "source /srv/homeassistant/bin/activate" | sudo tee -a /home/pi/.bashrc
-	
-	sudo -u homeassistant -H -s
-	#sudo su -s /bin/bash homeassistant
 	source /srv/homeassistant/bin/activate
 	# Install wheel
 	python3 -m pip install wheel
-
 	# Install Home Assistant
 	pip3 install homeassistant
-
 	#Start Home Assistant service
 	#hass
-
 	exit
+	EOF
+	#Add to bash
+	echo "source /srv/homeassistant/bin/activate" | sudo tee -a /home/homeassistant/.bashrc
+	echo "source /srv/homeassistant/bin/activate" | sudo tee -a /home/pi/.bashrc
 
 	echo "Back in $(pwd)"
 
