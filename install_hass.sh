@@ -62,8 +62,8 @@ then
 	sudo -H -u homeassistant -s /bin/bash -c '/srv/homeassistant/bin/python3.8 -m pip install wheel'
 	sudo -H -u homeassistant -s /bin/bash -c 'echo "Wheel installed."'
 	sudo -H -u homeassistant -s /bin/bash -c '/srv/homeassistant/bin/pip3 install homeassistant'
-	sudo -H -u homeassistant -s /bin/bash -c 'echo " Home Assistant installed"'
-	sudo -H -u homeassistant -s /bin/bash -c '/srv/homeassistant/bin/hass'
+	sudo -H -u homeassistant -s /bin/bash -c 'echo "Home Assistant installed"'
+	#sudo -H -u homeassistant -s /bin/bash -c '/srv/homeassistant/bin/hass'
 	#exit
 	#EOF
 	
@@ -76,6 +76,7 @@ then
 	cd ~
 
 	wget 'https://raw.githubusercontent.com/piyushkumarjiit/HomeAssistant/main/home-assistant-pi.service'
+	echo "Service file downlaoded."
 	sudo cp 'home-assistant-pi.service' '/etc/systemd/system/home-assistant-pi.service'
 
 	#sudo systemctl --system daemon-reload
