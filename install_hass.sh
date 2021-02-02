@@ -55,14 +55,18 @@ then
 	#echo "alias python=/usr/local/bin/$PYTHON_COMMAND_VERSION" >> ~/.bashrc
 	#echo "alias python=/usr/local/bin/python3.8" >> ~/.bashrc
 	python3.8 -m venv .
+	echo "Python 3.8 virtual env setup."
 	source /srv/homeassistant/bin/activate
-	# Install wheel
-	python3 -m pip install wheel
-	echo "Wheel installed."
-	# Install Home Assistant
-	pip3 install homeassistant
+	echo "Virtual environment activated."
 
-	sudo chown homeassistant:homeassistant homeassistant
+	# Install wheel
+	python3.8 -m pip install wheel
+	echo "Wheel installed."
+	# Install Home Assistant --> Next issue causing line
+	pip3 install homeassistant
+	echo " Home Assistant installed"
+
+	sudo chown -R homeassistant:homeassistant homeassistant
 
 	#Start Home Assistant service
 	#hass
