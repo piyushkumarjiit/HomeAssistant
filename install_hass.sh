@@ -27,6 +27,7 @@ else
 	echo "Python installed."
 fi
 
+source ~/.bashrc
 HA_SERVICE_STATUS=$(sudo systemctl status home-assistant@pi > /dev/null 2>&1; echo $?)
 
 if [[ $HA_SERVICE_STATUS -gt 0 ]]
