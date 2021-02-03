@@ -21,7 +21,7 @@ sudo apt-get install -y build-essential tk-dev libncurses5-dev libncursesw5-dev 
 wget "$PYTHON_DOWNLOAD_URL"
 sudo tar zxf "$PYTHON_VERSION.tgz"
 cd "$PYTHON_VERSION"
-sudo ./configure --enable-optimizations
+sudo ./configure --prefix=/usr --enable-optimizations
 sudo make -j 4
 #sudo make altinstall
 sudo make install
@@ -41,6 +41,7 @@ echo "Updated Python version: $($PYTHON_COMMAND_VERSION -V)"
 source ~/.bashrc
 
 #sudo ln -s -f /usr/local/bin/python3.8 /usr/local/bin/python3
+#sudo ln -s -f /usr/local/bin/python3.8 /usr/bin/python3
 
 #source /home/homeassistant/.bashrc
 CURRENT_PYTHON_VERSION=`python -c 'import sys; version=sys.version_info[:3]; print("{0}.{1}.{2}".format(*version))'`
