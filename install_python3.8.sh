@@ -23,7 +23,7 @@ sudo apt-get install -y build-essential tk-dev libncurses5-dev libncursesw5-dev 
 wget "$PYTHON_DOWNLOAD_URL"
 tar zxf "$PYTHON_VERSION.tgz"
 cd "$PYTHON_VERSION"
-sudo ./configure --enable-optimizations
+sudo ./configure --prefix=/usr --enable-optimizations
 sudo make -j 4
 sudo make altinstall
 #sudo make install
