@@ -85,6 +85,8 @@ then
 	sudo systemctl start home-assistant-pi
 	echo "Service started."
 
+	rm -f "home-assistant-pi.service"
+
 else
 
 	echo "HA Service running. Skipping installation."
