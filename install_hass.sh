@@ -3,7 +3,7 @@
 
 #Abort installation if any of the commands fail
 #set -e
-INSTALL_PYTHON="false"
+INSTALL_PYTHON="true"
 PYTHON_VERSION="Python-3.8.7"
 PYTHON_COMMAND_VERSION="python3.8"
 SLEEP_FOR=600
