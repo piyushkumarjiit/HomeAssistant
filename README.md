@@ -21,4 +21,4 @@ Update the permissions on the downloaded file using:
 
 Now run below script and follow prompts:
 
-<code>./install_hass.sh  | tee install_hass.log</code>
+<code>./install_hass.sh  |& tee install_hass.log</code>
