@@ -6,7 +6,7 @@
 
 PYTHON_VERSION="Python-3.8.7"
 PYTHON_COMMAND_VERSION="python3.8.7"
-PYTHON_DOWNLOAD_URL="wget https://www.python.org/ftp/python/3.8.7/Python-3.8.7.tgz"
+PYTHON_DOWNLOAD_URL="https://www.python.org/ftp/python/3.8.7/Python-3.8.7.tgz"
 
 CURRENT_PYTHON_VERSION=`python -c 'import sys; version=sys.version_info[:3]; print("{0}.{1}.{2}".format(*version))'`
 echo "Defult python version before update: $CURRENT_PYTHON_VERSION while requested Python version is : $PYTHON_VERSION"
