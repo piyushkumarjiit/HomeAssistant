@@ -37,7 +37,10 @@ then
 
 	#Add necessary packages
 	echo "Verifying required packages are present."
-	sudo apt-get install python3 python3-dev python3-venv python3-pip libffi-dev libssl-dev libjpeg-dev zlib1g-dev autoconf build-essential libopenjp2-7 libtiff5 -y
+	sudo apt-get install -y python3 python3-dev python3-venv python3-pip 
+	#sudo apt-get install python3.8-dev python3.8-venv python3.8-pip  -y 
+	#sudo apt-get install -y install python3.8 python3.8-dev python3.8-venv
+	sudo apt-get install libffi-dev libssl-dev libjpeg-dev zlib1g-dev autoconf build-essential libopenjp2-7 libtiff5  -y 
 
 	#Create User and add to relevant groups
 	echo "Creating HA user and adding him to necessary groups."
@@ -53,16 +56,16 @@ then
 	# run default shell for user (homeassistant) in user's home directory
 	#sudo -u homeassistant -H -s
 	#sudo -H -u homeassistant -s /bin/bash <<- EOF
-	sudo -H -u homeassistant -s /bin/bash -c 'python3 -m venv . '
+	sudo -H -u homeassistant -s /bin/bash -c '/usr/local/bin/python3.8 -m venv . '
 	#sudo -H -u homeassistant -s /bin/bash -c 'python3.8 -m venv --without-pip .'
 	#sudo -H -u homeassistant -s /bin/bash -c 'python3.8 -m ensurepip --upgrade'
 	#sudo -H -u homeassistant -s /bin/bash -c 'pip3 install --upgrade pip'
 	sudo -H -u homeassistant -s /bin/bash -c 'echo "Python 3 virtual env setup."'
 	sudo -H -u homeassistant -s /bin/bash -c 'source /srv/homeassistant/bin/activate'
 	sudo -H -u homeassistant -s /bin/bash -c 'echo "Virtual environment activated."'
-	sudo -H -u homeassistant -s /bin/bash -c '/srv/homeassistant/bin/python3 -m pip install wheel'
+	sudo -H -u homeassistant -s /bin/bash -c '/srv/homeassistant/bin/python3.8 -m pip install wheel'
 	sudo -H -u homeassistant -s /bin/bash -c 'echo "Wheel installed."'
-	sudo -H -u homeassistant -s /bin/bash -c '/srv/homeassistant/bin/pip3 install homeassistant'
+	sudo -H -u homeassistant -s /bin/bash -c '/srv/homeassistant/bin/pip3.8 install homeassistant'
 	sudo -H -u homeassistant -s /bin/bash -c 'echo "Home Assistant installed"'
 	#sudo -H -u homeassistant -s /bin/bash -c '/srv/homeassistant/bin/hass'
 	#exit
