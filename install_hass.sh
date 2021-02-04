@@ -4,7 +4,7 @@
 #Abort installation if any of the commands fail
 #set -e
 INSTALL_PYTHON="false"
-PYTHON_VERSION="Python-3.8.0"
+PYTHON_VERSION="Python-3.8.7"
 PYTHON_COMMAND_VERSION="python3.8"
 SLEEP_FOR=600
 
@@ -16,6 +16,12 @@ sudo apt-get update && sudo apt-get upgrade -y && sudo apt-get dist-upgrade -y &
 
 CURRENT_PYTHON_VERSION=`python3 -c 'import sys; version=sys.version_info[:3]; print("{0}.{1}.{2}".format(*version))'`
 echo "Python version returned: $CURRENT_PYTHON_VERSION while requested Python version is : $PYTHON_VERSION"
+if [[ -f /usr/local/bin/python3.8 ]]
+then
+	CURRENT_PYTHON_VERSION=`/usr/local/bin/python3.8 -c 'import sys; version=sys.version_info[:3]; print("{0}.{1}.{2}".format(*version))'`
+	echo "Python version in /usr/local/bin: $CURRENT_PYTHON_VERSION while requested Python version is : $PYTHON_VERSION"
+fi
+
 if [[ "Python-$CURRENT_PYTHON_VERSION" == "$PYTHON_VERSION" || "$INSTALL_PYTHON" == "false" ]]
 then
 	echo "$PYTHON_VERSION already available. Proceeding with HA install."
@@ -26,6 +32,7 @@ else
 	chmod 755 install_python3.8.sh
 	./install_python3.8.sh
 	echo "Python installed."
+	rm install_python3.8.sh
 fi
 
 source ~/.bashrc
@@ -70,16 +77,12 @@ then
 	sudo -H -u homeassistant -s /bin/bash -c '/srv/homeassistant/bin/pip3.8 install homeassistant'
 	sudo -H -u homeassistant -s /bin/bash -c 'echo "Home Assistant installed"'
 	
-	#exit
-	#EOF
-	
 	#Add to bash
 	#echo "source /srv/homeassistant/bin/activate" | sudo tee -a /home/homeassistant/.bashrc
 	#echo "source /srv/homeassistant/bin/activate" | sudo tee -a /home/pi/.bashrc
 
-	echo "Back in $(pwd) as $(whoami)"
-
 	cd ~
+	echo "Back in $(pwd) as $(whoami)"
 
 	wget 'https://raw.githubusercontent.com/piyushkumarjiit/HomeAssistant/main/home-assistant@homeassistant.service'
 	echo "Service file downlaoded."
@@ -96,6 +99,9 @@ then
 	sudo kill -9 $HASS_PID
 	sleep 10
 	echo "Killed first run of Home Assistant."
+	sleep 30
+	sudo systemctl start home-assistant@homeassistant
+	echo "Started service."
 
 else
 
