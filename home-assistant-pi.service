@@ -8,7 +8,7 @@ User=homeassistant
 Environment=VIRTUAL_ENV="/srv/homeassistant/venv" 
 Environment=PATH="$VIRTUAL_ENV/bin:$PATH"
 WorkingDirectory=/home/homeassistant/.homeassistant
-ExecStart=/srv/homeassistant/venv/bin/hass -c "/home/homeassistant/.homeassistant"
+ExecStart=/srv/homeassistant/bin/hass -c "/home/homeassistant/.homeassistant"
 
 [Install]
 WantedBy=multi-user.target
