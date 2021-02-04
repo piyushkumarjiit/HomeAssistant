@@ -3,7 +3,7 @@
 
 #Abort installation if any of the commands fail
 #set -e
-INSTALL_PYTHON="true"
+INSTALL_PYTHON="false"
 PYTHON_VERSION="Python-3.8.0"
 PYTHON_COMMAND_VERSION="python3.8"
 
@@ -65,9 +65,10 @@ then
 	sudo -H -u homeassistant -s /bin/bash -c 'echo "Virtual environment activated."'
 	sudo -H -u homeassistant -s /bin/bash -c '/srv/homeassistant/bin/python3.8 -m pip install wheel'
 	sudo -H -u homeassistant -s /bin/bash -c 'echo "Wheel installed."'
+	sudo -H -u homeassistant -s /bin/bash -c '/srv/homeassistant/bin/pip3.8 install pillow --global-option="build_ext" --global-option="--enable-zlib" --global-option="--enable-jpeg" --global-option="--enable-tiff" --global-option="--enable-freetype" --global-option="--enable-webp" --global-option="--enable-webpmux" --global-option="--enable-jpeg2000"'
 	sudo -H -u homeassistant -s /bin/bash -c '/srv/homeassistant/bin/pip3.8 install homeassistant'
 	sudo -H -u homeassistant -s /bin/bash -c 'echo "Home Assistant installed"'
-	#sudo -H -u homeassistant -s /bin/bash -c '/srv/homeassistant/bin/hass'
+	
 	#exit
 	#EOF
 	
@@ -79,22 +80,22 @@ then
 
 	cd ~
 
-	wget 'https://raw.githubusercontent.com/piyushkumarjiit/HomeAssistant/main/home-assistant-pi.service'
+	wget 'https://raw.githubusercontent.com/piyushkumarjiit/HomeAssistant/main/home-assistant@homeassistant.service'
 	echo "Service file downlaoded."
-	sudo cp 'home-assistant-pi.service' '/etc/systemd/system/home-assistant-pi.service'
+	sudo cp 'home-assistant@homeassistant.service' '/etc/systemd/system/home-assistant@homeassistant.service'
+	rm -f "home-assistant@homeassistant"
 
 	sudo systemctl --system daemon-reload
-	sudo systemctl enable home-assistant-pi
-	sudo systemctl start home-assistant-pi
-	echo "Service started."
-
-	rm -f "home-assistant-pi.service"
+	sudo systemctl enable home-assistant@homeassistant
+	#sudo systemctl start home-assistant@homeassistant
+	echo "Starting Home Assistant."
+	sudo -H -u homeassistant -s /bin/bash -c '/srv/homeassistant/bin/hass'
 
 else
 
 	echo "HA Service running. Skipping installation."
-	sudo systemctl status home-assistant-pi -l
-	sudo journalctl -f -u home-assistant-pi
+	sudo systemctl status home-assistant@homeassistant -l
+	sudo journalctl -f -u home-assistant@homeassistant
 
 fi
 
