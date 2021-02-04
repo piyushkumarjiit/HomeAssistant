@@ -6,6 +6,7 @@
 INSTALL_PYTHON="false"
 PYTHON_VERSION="Python-3.8.0"
 PYTHON_COMMAND_VERSION="python3.8"
+SLEEP_FOR=600
 
 source ~/.bashrc
 #source /home/homeassistant/.bashrc
@@ -88,8 +89,13 @@ then
 	sudo systemctl --system daemon-reload
 	sudo systemctl enable home-assistant@homeassistant
 	#sudo systemctl start home-assistant@homeassistant
-	echo "Starting Home Assistant."
-	sudo -H -u homeassistant -s /bin/bash -c '/srv/homeassistant/bin/hass'
+	echo "First run of Home Assistant."
+	sudo -H -u homeassistant -s /bin/bash -c '/srv/homeassistant/bin/hass &'
+	HASS_PID=$(ps -aef | grep hass | grep homeass+ | awk -F ' ' '{print $2}')
+	sleep $SLEEP_FOR
+	sudo kill -9 $HASS_PID
+	sleep 10
+	echo "Killed first run of Home Assistant."
 
 else
 
