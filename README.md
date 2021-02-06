@@ -17,8 +17,8 @@ For installation, run below commands from your Pi terminal (or SSH session) :
 
 Update the permissions on the downloaded file using:
 
-<code>chmod 755 install_hass.sh</code>
+<code>chmod 755 install_hass_supervised.sh</code>
 
 Now run below script and follow prompts:
 
-<code>./install_hass.sh  |& tee install_hass.log</code>
+<code>./install_hass_supervised.sh |& tee install_hass_supervised.log</code>
