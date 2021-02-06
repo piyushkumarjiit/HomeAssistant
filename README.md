@@ -13,7 +13,7 @@ The script is self contained and fetches necessary files from github repo.
 #### Simple Installation
 For installation, run below commands from your Pi terminal (or SSH session) :
 
-<code>wget https://raw.githubusercontent.com/piyushkumarjiit/HomeAssistant/main/install_hass.sh</code>
+<code>wget https://raw.githubusercontent.com/piyushkumarjiit/HomeAssistant/main/install_hass_supervised.sh</code>
 
 Update the permissions on the downloaded file using:
 
