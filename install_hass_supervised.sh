@@ -9,7 +9,7 @@ MODEM_MGR_STATUS=$(sudo systemctl status ModemManager | grep "Active: inactive (
 APPARMOR_STATUS=$( dpkg-query -l | grep apparmor > /dev/null 2>&1; echo $? )
 
 # Update and upgrade.  Reboot (optional)
-sudo apt update && sudo apt upgrade -y && sudo apt autoremove -y
+sudo apt-get update && sudo apt-get upgrade -y && sudo apt-get autoremove -y
 
 #Create and Add user to sudo group
 adduser $USER_ACCOUNT
