@@ -11,17 +11,17 @@ DOCKER_STATUS=$(sudo systemctl status docker > /dev/null 2>&1; echo $? )
 
 for package in "${DEPENDENT_PACKAGES[@]}"
 do
-  echo "Checking if $package is installed."
+  echo -n "Checking if $package is installed: "
   PACKAGE_STATUS=$( dpkg-query -l | grep $package > /dev/null 2>&1; echo $? )
   if [[ $PACKAGE_STATUS == 0 ]]
   then
-  	echo "$package is installed."
+  	echo "Yes"
   	let "DEPENDENCY_STATUS = $DEPENDENCY_STATUS + $PACKAGE_STATUS"
   else
-  	echo "$package is not installed."
+  	echo "No"
   	# sudo apt-get install -y $package
   	let "DEPENDENCY_STATUS = $DEPENDENCY_STATUS + $PACKAGE_STATUS"
-  	echo "Dep Status changed: $DEPENDENCY_STATUS"
+  	echo "Dep Status changed: $DEPENDENCY_STATUS. Proceeding with dependency installation."
   	break
   fi
 
