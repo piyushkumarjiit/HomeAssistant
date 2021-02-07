@@ -6,9 +6,8 @@ HA_SUPERVISED_SCRIPT="https://raw.githubusercontent.com/Kanga-Who/home-assistant
 USER_ACCOUNT="pi"
 HA_IP_ADDRESS=$(hostname -I | cut -d" " -f 1)
 MODEM_MGR_STATUS=$(sudo systemctl status ModemManager | grep "Active: inactive (dead)" > /dev/null 2>&1; echo $? )
-PACKAGE_STATUS=$( dpkg-query -l | grep apparmor > /dev/null 2>&1; echo $? )
 DEPENDENT_PACKAGES=("software-properties-common" "apparmor-utils" "apt-transport-https" "ca-certificates" "curl" "dbus" "jq" "network-manager")
-
+DOCKER_STATUS=$(sudo systemctl status docker > /dev/null 2>&1; echo $? )
 
 for package in "${DEPENDENT_PACKAGES[@]}"
 do
@@ -51,13 +50,18 @@ then
 	#echo "Dependencies set up. Continuing with HA Supervised install."
 	# Change to root
 	#sudo -i
-	#Install Docker
-	curl -fsSL get.docker.com | sudo /bin/bash -s
-	# Add user to Docker group
-	sudo usermod -aG docker $USER_ACCOUNT
-	sleep 30
-	#Restart Docker
-	sudo systemctl restart docker
+	if [[ $DOCKER_STATUS != 0 ]]
+	then
+		#Install Docker
+		curl -fsSL get.docker.com | sudo /bin/bash -s
+		# Add user to Docker group
+		sudo usermod -aG docker $USER_ACCOUNT
+		sleep 30
+		#Restart Docker
+		sudo systemctl restart docker
+	else
+		echo "Docker already installed. Proceeding with HA installation."
+	fi
 
 	#exit
 	# Install HA Supervised
@@ -80,13 +84,19 @@ else
 	echo "Dependencies set up. Continuing with HA Supervised install."
 	# Change to root
 	#sudo -i
-	#Install Docker
-	curl -fsSL get.docker.com | sudo /bin/bash -s
-	# Add user to Docker group
-	sudo usermod -aG docker $USER_ACCOUNT
-	sleep 30
-	#Restart Docker
-	sudo systemctl restart docker
+	if [[ $DOCKER_STATUS != 0 ]]
+	then
+		#Install Docker
+		curl -fsSL get.docker.com | sudo /bin/bash -s
+		# Add user to Docker group
+		sudo usermod -aG docker $USER_ACCOUNT
+		sleep 30
+		#Restart Docker
+		sudo systemctl restart docker
+	else
+		echo "Docker already installed. Proceeding with HA installation."
+	fi
+
 	#exit
 	# Install HA Supervised
 	curl -sL "$HA_SUPERVISED_SCRIPT" | sudo /bin/bash -s  -- -m $MACHINE_NAME
