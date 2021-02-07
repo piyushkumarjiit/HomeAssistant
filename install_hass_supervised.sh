@@ -44,7 +44,7 @@ then
 	sudo systemctl stop ModemManager
 
 	echo "Dependencies installed, restarting. Please rerun the script upon restart."
-	if [ -f /var/run/reboot-required ]
+	if [[ -f /var/run/reboot-required ]]
 	then
 	  	echo 'Reboot required'
 	  	# Reboot
