@@ -18,26 +18,27 @@ usermod -aG sudo $USER_ACCOUNT
 
 if [[ $MODEM_MGR_STATUS != 0 && $APPARMOR_STATUS != 0 ]]
 then
-	# Change to root
-	sudo -i
 	#Install dependencies
-	apt-get install -y software-properties-common apparmor-utils apt-transport-https ca-certificates curl dbus jq network-manager
+	sudo apt-get install -y software-properties-common apparmor-utils apt-transport-https ca-certificates curl dbus jq network-manager
 	# Disable modem manager
-	systemctl disable ModemManager
+	sudo systemctl disable ModemManager
 	# Stop modem manager
-	systemctl stop ModemManager
+	sudo systemctl stop ModemManager
+
+	echo "Dependencies installed, restarting. "
 	# Reboot
 	sudo reboot
 else
+	echo "Dependencies set up. Continuing with HA Supervised install."
 	# Change to root
-	sudo -i
+	#sudo -i
 	#Install Docker
-	curl -fsSL get.docker.com | sh
+	curl -fsSL get.docker.com | sudo /bin/bash
 	# Add user to Docker group
 	sudo usermod -aG docker $USER_ACCOUNT
-	exit
+	#exit
 	# Install HA Supervised
-	sudo -H -u homeassistant -s /bin/bash -c curl -sL "$HA_SUPERVISED_SCRIPT" | bash -s  -- -m $MACHINE_NAME
+	curl -sL "$HA_SUPERVISED_SCRIPT" | sudo bash -s  -- -m $MACHINE_NAME
 	echo ""
 	echo -n "HA starting on $HA_IP_ADDRESS:8123. Waiting ."
 
