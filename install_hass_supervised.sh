@@ -24,7 +24,6 @@ do
   	echo "Dep Status changed: $DEPENDENCY_STATUS. Proceeding with dependency installation."
   	break
   fi
-
 done
 
 # Update and upgrade.  Reboot (optional)
@@ -48,7 +47,6 @@ then
 	echo "ModemManager stopped and disabled."
 
 	echo "Dependencies installed, restarting. Please rerun the script upon restart."
-
 	if [[ $DOCKER_STATUS != 0 ]]
 	then
 		#Install Docker
@@ -65,12 +63,9 @@ then
 
 	# Install HA Supervised
 	curl -sL "$HA_SUPERVISED_SCRIPT" | sudo /bin/bash -s  -- -m $MACHINE_NAME
-
 	echo ""
 	echo -n "HA starting on $HA_IP_ADDRESS:8123. Waiting ."
-
 	HA_IP_STATUS=$(curl -o /dev/null -s -w "%{http_code}\n" $HA_IP_ADDRESS:8123)
-
 	while [[ $HA_IP_STATUS != "200"  ]]
 	do
 		HA_IP_STATUS=$(curl -o /dev/null -s -w "%{http_code}\n" $HA_IP_ADDRESS:8123)
@@ -79,7 +74,6 @@ then
 	done
 	echo "."
 	echo "HA UI up @ $HA_IP_ADDRESS:8123. Please proceed with rest of the config using your browser."
-
 	# Reboot
 	#sudo reboot
 else
@@ -100,12 +94,9 @@ else
 
 	# Install HA Supervised
 	curl -sL "$HA_SUPERVISED_SCRIPT" | sudo /bin/bash -s  -- -m $MACHINE_NAME
-
 	echo ""
 	echo -n "HA starting on $HA_IP_ADDRESS:8123. Waiting ."
-
 	HA_IP_STATUS=$(curl -o /dev/null -s -w "%{http_code}\n" $HA_IP_ADDRESS:8123)
-
 	while [[ $HA_IP_STATUS != "200"  ]]
 	do
 		HA_IP_STATUS=$(curl -o /dev/null -s -w "%{http_code}\n" $HA_IP_ADDRESS:8123)
