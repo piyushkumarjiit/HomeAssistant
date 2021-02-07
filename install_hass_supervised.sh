@@ -3,6 +3,9 @@
 
 MACHINE_NAME=raspberrypi3
 HA_SUPERVISED_SCRIPT="https://raw.githubusercontent.com/Kanga-Who/home-assistant/master/supervised-installer.sh"
+#HA_SUPERVISED_SCRIPT="https://raw.githubusercontent.com/home-assistant/supervised-installer/master/installer.sh"
+WIFI_RANDOMIZER_CONF="https://raw.githubusercontent.com/piyushkumarjiit/HomeAssistant/main/100-disable-wifi-mac-randomization.conf"
+WIFI_RANDOMIZATION="false" 
 USER_ACCOUNT="pi"
 HA_IP_ADDRESS=$(hostname -I | cut -d" " -f 1)
 MODEM_MGR_STATUS=$(sudo systemctl status ModemManager | grep "Active: inactive (dead)" > /dev/null 2>&1; echo $? )
@@ -63,6 +66,18 @@ then
 		echo "Docker already installed. Proceeding with HA installation."
 	fi
 
+	if [[ $WIFI_RANDOMIZATION == "false" ]]
+	then
+		# Disable WiFi Mac Randomization for Network Manager
+		echo "Disabling WiFi randomization."
+		sudo wget $WIFI_RANDOMIZER_CONF -q -O /etc/NetworkManager/conf.d/100-disable-wifi-mac-randomization.conf
+		echo "WiFi randomization file copied and set up."
+	else
+		echo "Skipping WiFi randomization."
+	fi
+
+
+
 	# Install HA Supervised
 	curl -sL "$HA_SUPERVISED_SCRIPT" | sudo /bin/bash -s  -- -m $MACHINE_NAME
 	echo ""
@@ -91,6 +106,16 @@ else
 		sudo systemctl restart docker
 	else
 		echo "Docker already installed. Proceeding with HA installation."
+	fi
+
+	if [[ $WIFI_RANDOMIZATION == "false" ]]
+	then
+		# Disable WiFi Mac Randomization for Network Manager
+		echo "Disabling WiFi randomization."
+		sudo wget $WIFI_RANDOMIZER_CONF -q -O /etc/NetworkManager/conf.d/100-disable-wifi-mac-randomization.conf
+		echo "WiFi randomization file copied and set up."
+	else
+		echo "Skipping WiFi randomization."
 	fi
 
 	# Install HA Supervised
