@@ -44,44 +44,8 @@ then
 	sudo systemctl stop ModemManager
 
 	echo "Dependencies installed, restarting. Please rerun the script upon restart."
-	if [[ -f /var/run/reboot-required ]]
-	then
-	  	echo 'Reboot required'
-	  	# Reboot
-		sudo reboot
-	else
-		echo "Dependencies set up. Continuing with HA Supervised install."
-		if [[ $DOCKER_STATUS != 0 ]]
-		then
-			#Install Docker
-			curl -fsSL get.docker.com | sudo /bin/bash -s
-			# Add user to Docker group
-			sudo usermod -aG docker $USER_ACCOUNT
-			sleep 30
-			#Restart Docker
-			sudo systemctl restart docker
-		else
-			echo "Docker already installed. Proceeding with HA installation."
-		fi
-
-		# Install HA Supervised
-		curl -sL "$HA_SUPERVISED_SCRIPT" | sudo /bin/bash -s  -- -m $MACHINE_NAME
-		echo ""
-		echo -n "HA starting on $HA_IP_ADDRESS:8123. Waiting ."
-
-		HA_IP_STATUS=$(curl -o /dev/null -s -w "%{http_code}\n" $HA_IP_ADDRESS:8123)
-
-		while [[ $HA_IP_STATUS != "200"  ]]
-		do
-			HA_IP_STATUS=$(curl -o /dev/null -s -w "%{http_code}\n" $HA_IP_ADDRESS:8123)
-			sleep 30
-			echo -n "."
-		done
-		echo "."
-		echo "HA UI up @ $HA_IP_ADDRESS:8123. Please proceed with rest of the config using your browser."
-
-	fi
-
+	# Reboot
+	sudo reboot
 else
 	echo "Dependencies set up. Continuing with HA Supervised install."
 	if [[ $DOCKER_STATUS != 0 ]]
@@ -91,6 +55,7 @@ else
 		# Add user to Docker group
 		sudo usermod -aG docker $USER_ACCOUNT
 		sleep 30
+		sudo systemctl --system daemon-reload
 		#Restart Docker
 		sudo systemctl restart docker
 	else
@@ -99,6 +64,7 @@ else
 
 	# Install HA Supervised
 	curl -sL "$HA_SUPERVISED_SCRIPT" | sudo /bin/bash -s  -- -m $MACHINE_NAME
+
 	echo ""
 	echo -n "HA starting on $HA_IP_ADDRESS:8123. Waiting ."
 
