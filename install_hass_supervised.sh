@@ -38,7 +38,7 @@ if [[ $MODEM_MGR_STATUS != 0 && $DEPENDENCY_STATUS != 0 ]]
 then
 	#Install dependencies
 	sudo apt-get install -q -y software-properties-common apparmor-utils apt-transport-https ca-certificates curl dbus jq network-manager
-	echo "Dependencies insta complete."
+	echo "Dependencies installation complete."
 	# Disable modem manager
 	sudo systemctl disable ModemManager
 	# Stop modem manager
