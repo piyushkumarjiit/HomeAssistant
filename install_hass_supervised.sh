@@ -45,8 +45,10 @@ then
 	sudo systemctl stop ModemManager
 	sudo systemctl --system daemon-reload
 	echo "ModemManager stopped and disabled."
+	#echo "Dependencies installed, restarting. Please rerun the script upon restart."
+	# Reboot
+	#sudo reboot
 
-	echo "Dependencies installed, restarting. Please rerun the script upon restart."
 	if [[ $DOCKER_STATUS != 0 ]]
 	then
 		#Install Docker
@@ -74,8 +76,7 @@ then
 	done
 	echo "."
 	echo "HA UI up @ $HA_IP_ADDRESS:8123. Please proceed with rest of the config using your browser."
-	# Reboot
-	#sudo reboot
+
 else
 	echo "Dependencies set up. Continuing with HA Supervised install."
 	if [[ $DOCKER_STATUS != 0 ]]
