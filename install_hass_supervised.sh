@@ -27,7 +27,7 @@ do
 done
 
 # Update and upgrade.  Reboot (optional)
-sudo apt-get update -q -y && sudo apt-get upgrade -q -y && apt-get dist-upgrade -q -y && sudo apt-get autoremove -q -y
+sudo apt-get update -q -y && sudo apt-get upgrade -q -y && sudo apt-get dist-upgrade -q -y && sudo apt-get autoremove -q -y
 echo "Update complete."
 
 #Create and Add user to sudo group
