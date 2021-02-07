@@ -44,8 +44,13 @@ then
 	sudo systemctl stop ModemManager
 
 	echo "Dependencies installed, restarting. Please rerun the script upon restart."
-	# Reboot
-	sudo reboot
+	if [ -f /var/run/reboot-required ]
+	then
+	  	echo 'Reboot required'
+	  	# Reboot
+		sudo reboot
+	fi
+
 else
 	echo "Dependencies set up. Continuing with HA Supervised install."
 	if [[ $DOCKER_STATUS != 0 ]]
