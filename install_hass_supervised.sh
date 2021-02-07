@@ -22,6 +22,7 @@ do
   	echo "$package is not installed."
   	# sudo apt-get install -y $package
   	let "DEPENDENCY_STATUS = $DEPENDENCY_STATUS + $PACKAGE_STATUS"
+  	echo "Dep Status changed: $DEPENDENCY_STATUS"
   	break
   fi
 
@@ -80,7 +81,7 @@ else
 	# Change to root
 	#sudo -i
 	#Install Docker
-	curl -fsSL get.docker.com | sudo /bin/bash
+	curl -fsSL get.docker.com | sudo /bin/bash -s
 	# Add user to Docker group
 	sudo usermod -aG docker $USER_ACCOUNT
 	sleep 30
@@ -88,7 +89,7 @@ else
 	sudo systemctl restart docker
 	#exit
 	# Install HA Supervised
-	curl -sL "$HA_SUPERVISED_SCRIPT" | sudo bash -s  -- -m $MACHINE_NAME
+	curl -sL "$HA_SUPERVISED_SCRIPT" | sudo /bin/bash -s  -- -m $MACHINE_NAME
 	echo ""
 	echo -n "HA starting on $HA_IP_ADDRESS:8123. Waiting ."
 
