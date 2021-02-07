@@ -76,6 +76,7 @@ else
 	while [[ $HA_IP_STATUS != "200"  ]]
 	do
 		HA_IP_STATUS=$(curl -o /dev/null -s -w "%{http_code}\n" $HA_IP_ADDRESS:8123)
+		sleep 30
 		echo -n "."
 	done
 
