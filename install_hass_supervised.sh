@@ -2,12 +2,20 @@
 #Author: piyushkumar.jiit@gmail.com
 
 MACHINE_NAME=raspberrypi3
+USER_ACCOUNT="pi"
+
 HA_SUPERVISED_SCRIPT="https://raw.githubusercontent.com/Kanga-Who/home-assistant/master/supervised-installer.sh"
 #HA_SUPERVISED_SCRIPT="https://raw.githubusercontent.com/home-assistant/supervised-installer/master/installer.sh"
-WIFI_RANDOMIZER_CONF="https://raw.githubusercontent.com/piyushkumarjiit/HomeAssistant/main/100-disable-wifi-mac-randomization.conf"
-WIFI_RANDOMIZATION="false" 
-USER_ACCOUNT="pi"
+
 HA_IP_ADDRESS=$(hostname -I | cut -d" " -f 1)
+
+WIFI_RANDOMIZER_CONF="https://raw.githubusercontent.com/piyushkumarjiit/HomeAssistant/main/100-disable-wifi-mac-randomization.conf"
+WIFI_RANDOMIZATION="false"
+
+WIFI_IP_SETUP="false" 
+IP_ADDRESS="$HA_IP_ADDRESS"
+ROUTER_IP="$(ip r | grep default | awk -F " " '{print$3}')"
+
 MODEM_MGR_STATUS=$(sudo systemctl status ModemManager | grep "Active: inactive (dead)" > /dev/null 2>&1; echo $? )
 DEPENDENT_PACKAGES=("software-properties-common" "apparmor-utils" "apt-transport-https" "ca-certificates" "curl" "dbus" "jq" "network-manager")
 DOCKER_STATUS=$(sudo systemctl status docker > /dev/null 2>&1; echo $? )
@@ -76,7 +84,19 @@ then
 		echo "Skipping WiFi randomization."
 	fi
 
-
+	if [[ $WIFI_IP_SETUP == "true" ]]
+	then
+		# Set hardcoded IP for WiFi
+		echo "Disabling WiFi randomization."
+		echo "interface wlan0" | sudo tee -a /etc/dhcpcd.conf
+		echo "static ip_address=$IP_ADDRESS" | sudo tee -a /etc/dhcpcd.conf
+		echo "static routers=$ROUTER_IP" | sudo tee -a /etc/dhcpcd.conf
+		# Release the DHCP lease to get the new address
+		dhclient -r wlan0
+		echo "WiFi IP Address setup in /etc/dhcpcd.conf file."
+	else
+		echo "Skipping WiFi IP Address setup."
+	fi
 
 	# Install HA Supervised
 	curl -sL "$HA_SUPERVISED_SCRIPT" | sudo /bin/bash -s  -- -m $MACHINE_NAME
@@ -108,7 +128,7 @@ else
 		echo "Docker already installed. Proceeding with HA installation."
 	fi
 
-	if [[ $WIFI_RANDOMIZATION == "false" ]]
+	if [[ $WIFI_RANDOMIZATION == "false" && -f /etc/NetworkManager/conf.d/100-disable-wifi-mac-randomization.conf ]]
 	then
 		# Disable WiFi Mac Randomization for Network Manager
 		echo "Disabling WiFi randomization."
@@ -116,6 +136,20 @@ else
 		echo "WiFi randomization file copied and set up."
 	else
 		echo "Skipping WiFi randomization."
+	fi
+
+	if [[ $WIFI_IP_SETUP == "true" ]]
+	then
+		# Set hardcoded IP for WiFi
+		echo "Disabling WiFi randomization."
+		echo "interface wlan0" | sudo tee -a /etc/dhcpcd.conf
+		echo "static ip_address=$IP_ADDRESS" | sudo tee -a /etc/dhcpcd.conf
+		echo "static routers=$ROUTER_IP" | sudo tee -a /etc/dhcpcd.conf
+		# Release the DHCP lease to get the new address
+		dhclient -r wlan0
+		echo "WiFi IP Address setup in /etc/dhcpcd.conf file."
+	else
+		echo "Skipping WiFi IP Address setup."
 	fi
 
 	# Install HA Supervised
