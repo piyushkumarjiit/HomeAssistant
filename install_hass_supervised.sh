@@ -46,7 +46,7 @@ then
 
 	echo "Dependencies installed, restarting. "
 	# Reboot
-	#sudo reboot
+	sudo reboot
 
 	#echo "Dependencies set up. Continuing with HA Supervised install."
 	# Change to root
