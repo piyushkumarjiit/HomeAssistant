@@ -1,7 +1,7 @@
 #!/bin/bash
 #Author: piyushkumar.jiit@gmail.com
 
-MACHINE_NAME==raspberrypi3
+MACHINE_NAME=raspberrypi3
 HA_SUPERVISED_SCRIPT="https://raw.githubusercontent.com/Kanga-Who/home-assistant/master/supervised-installer.sh"
 USER_ACCOUNT="pi"
 HA_IP_ADDRESS=$(hostname -I | cut -d" " -f 1)
