@@ -37,7 +37,7 @@ sudo usermod -aG sudo $USER_ACCOUNT
 if [[ $MODEM_MGR_STATUS != 0 && $DEPENDENCY_STATUS != 0 ]]
 then
 	#Install dependencies
-	sudo apt-get -q install -y software-properties-common apparmor-utils apt-transport-https ca-certificates curl dbus jq network-manager
+	sudo apt-get install -q -y software-properties-common apparmor-utils apt-transport-https ca-certificates curl dbus jq network-manager
 	echo "Dependencies insta complete."
 	# Disable modem manager
 	sudo systemctl disable ModemManager
