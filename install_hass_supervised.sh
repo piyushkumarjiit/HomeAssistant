@@ -113,6 +113,13 @@ then
 	echo "HA UI up @ $HA_IP_ADDRESS:8123. Please proceed with rest of the config using your browser."
 
 else
+	# Disable modem manager
+	sudo systemctl disable ModemManager
+	# Stop modem manager
+	sudo systemctl stop ModemManager
+	sudo systemctl --system daemon-reload
+	echo "ModemManager stopped and disabled."
+	
 	echo "Dependencies set up. Continuing with HA Supervised install."
 	if [[ $DOCKER_STATUS != 0 ]]
 	then
