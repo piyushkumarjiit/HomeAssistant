@@ -119,7 +119,7 @@ else
 	sudo systemctl stop ModemManager
 	sudo systemctl --system daemon-reload
 	echo "ModemManager stopped and disabled."
-	
+
 	echo "Dependencies set up. Continuing with HA Supervised install."
 	if [[ $DOCKER_STATUS != 0 ]]
 	then
@@ -154,6 +154,7 @@ else
 		echo "static routers=$ROUTER_IP" | sudo tee -a /etc/dhcpcd.conf
 		# Release the DHCP lease to get the new address
 		dhclient -r wlan0
+		#sudo ip address del 192.168.2.125/24 dev wlan0
 		echo "WiFi IP Address setup in /etc/dhcpcd.conf file."
 	else
 		echo "Skipping WiFi IP Address setup."
