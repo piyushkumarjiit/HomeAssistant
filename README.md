@@ -1,5 +1,5 @@
 # HomeAssistant
-Installing and configuring Home Assistant
+Installing and configuring Home Assistant Supervised
 
 ### Prerequisites
 <li>Basic computer/Raspberry Pi know how</li>
