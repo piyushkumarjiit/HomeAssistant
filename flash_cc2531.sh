@@ -49,7 +49,7 @@ then
 	echo "Flashing complete."
 
 else
-	echo "Connection not OK. Please connect wires correctly. Aborting firmware update."
+	echo "Connection not OK $CONNECTION_OK. Please connect wires correctly. Aborting firmware update."
 	sleep 5
 fi
 echo "All done."
