@@ -37,7 +37,7 @@ echo "$(pwd)"
 # Test connection
 CONNECTION_OK=$(./cc_chipid)
 
-if [[ $CONNECTION_OK == "ID = b524." ]]
+if [[ $CONNECTION_OK == 'ID = b524.' ]]
 then
 	echo "Connection seems to be OK, proceeding with firmware update."
 	# Download firmware for cc2531
