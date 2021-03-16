@@ -33,7 +33,7 @@ git clone https://github.com/jmichault/flash_cc2531.git
 
 # CD to cloned directory
 cd flash_cc2531
-
+echo "$(pwd)"
 # Test connection
 CONNECTION_OK=$(./cc_chipid)
 
